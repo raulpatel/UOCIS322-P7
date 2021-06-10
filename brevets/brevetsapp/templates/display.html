@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Display!</title>
+    </head>
+    <body>
+        <div>
+            <form method="POST" action="/insert/">
+                <div>
+                  <input name="title" value="Some title" />
+                </div>
+                <div>
+                  <textarea name="body" rows="8" cols="80">Some text!</textarea>
+                </div>
+                <div>
+                    <button>Insert!</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            {% for article in items %}
+            <div>
+                <h1>{{ article.index }}</h1>
+                <p>{{ article.km }}</p>
+                <p>{{ article.open }}</p>
+                <p>{{ article.close }}</p>
+                <hl />
+            </div>
+            {% endfor %}
+            <a href="/">Go Back</a>
+        </div>
+    </body>
+</html>

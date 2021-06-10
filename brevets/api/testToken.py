@@ -8,7 +8,7 @@ SECRET_KEY = 'test1234@#$'
 
 def generate_auth_token(expiration=600):
    s = Serializer(SECRET_KEY, expires_in=expiration)
-   return s.dumps({'id': 5, 'name': 'Ryan'})
+   return s.dumps({'username': 'Ryan'})
 
 
 def verify_auth_token(token):

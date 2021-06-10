@@ -1,0 +1,5 @@
+flask
+flask_restful
+pymongo
+itsdangerous==0.24
+passlib==1.7.1
