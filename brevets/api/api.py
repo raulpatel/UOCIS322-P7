@@ -140,7 +140,7 @@ class token(Resource):
             abort(401)
         token = generate_auth_token(username, password)
         result = {
-            'token': token,
+            'token': str(token)[2:-1],
             'duration': 600
         }
         app.logger.debug("login success")

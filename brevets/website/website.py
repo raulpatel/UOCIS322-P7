@@ -1,4 +1,5 @@
 from urllib.parse import urlparse, urljoin
+import flask
 from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_login import (LoginManager, current_user, login_required,
                          login_user, logout_user, UserMixin,
@@ -46,8 +47,9 @@ def is_safe_url(target):
 
 
 class User(UserMixin):
-    def __init__(self, username, token):
-        self.username = username
+    def __init__(self, id, token):
+        self.id = id
+        #self.username = username
         self.token = token
 
 
@@ -144,9 +146,9 @@ def listeverything():
     top = request.args.get('top')
     dtype = str(request.args.get('dtype'))
     if top:
-        r = requests.get('http://restapi:5000/listAll/' + dtype + "?top=" + str(top))
+        r = requests.get('http://restapi:5000/listAll/' + dtype + "?token=" + current_user.token + "&top=" + str(top))
     else:
-        r = requests.get('http://restapi:5000/listAll/' + dtype)
+        r = requests.get('http://restapi:5000/listAll/' + dtype + "?token=" + current_user.token)
     return r.text    
 
 @app.route('/listOpenOnly', methods=['GET'])
@@ -155,9 +157,9 @@ def listopen():
     top = request.args.get('top')
     dtype = str(request.args.get('dtype'))
     if top:
-        r = requests.get('http://restapi:5000/listOpenOnly/' + dtype + "?top=" + str(top))
+        r = requests.get('http://restapi:5000/listOpenOnly/' + dtype + "?token=" + flask.session['token'] + "&top=" + str(top))
     else:
-        r = requests.get('http://restapi:5000/listOpenOnly/' + dtype)
+        r = requests.get('http://restapi:5000/listOpenOnly/' + dtype + "?token=" + flask.session['token'])
     return r.text
 
 @app.route('/listCloseOnly', methods=['GET'])
@@ -166,9 +168,9 @@ def listclose():
     top = request.args.get('top')
     dtype = str(request.args.get('dtype'))
     if top:
-        r = requests.get('http://restapi:5000/listCloseOnly/' + dtype + "?top=" + str(top))
+        r = requests.get('http://restapi:5000/listCloseOnly/' + dtype + "?token=" + flask.session['token'] + "&top=" + str(top))
     else:
-        r = requests.get('http://restapi:5000/listCloseOnly/' + dtype)
+        r = requests.get('http://restapi:5000/listCloseOnly/' + dtype + "?token=" + flask.session['token'])
     return r.text
 
 
